@@ -4,11 +4,17 @@
     echo htmlspecialchars($_POST['nom'])." ";
     echo htmlspecialchars($_POST['prenom'])." ";
 
-    $mailvar = strip_tags($_POST['email']);
-    $namevar = strip_tags($_POST['nom']);
-    $fnamevar = strip_tags($_POST['prenom']);
+    $mailvar = htmlspecialchars($_POST['email']);
+    $namevar = htmlspecialchars($_POST['nom']);
+    $fnamevar = htmlspecialchars($_POST['prenom']);
 
-    $f = fopen("$mailvar.txt","w");
-    fwrite($f,"$mailvar, $namevar, $fnamevar");
+    if(file_exists("participants/$mailvar.txt")){
+        echo "Adresse email déjà existante";
+    }
+    else {
+        $f = fopen("participants/$mailvar.txt","w");
+        fwrite($f,"$mailvar;$namevar;$fnamevar");
+    }
+    
 } 
 ?>
